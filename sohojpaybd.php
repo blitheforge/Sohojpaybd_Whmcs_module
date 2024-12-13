@@ -167,5 +167,11 @@ function sohojpaybd_payment_url($params)
     $response = curl_exec($curl);
     curl_close($curl);
 
-    echo $response;
+    $res = json_decode($response, true);
+    if ($res['status'] && $res['payment_url']) {
+        header('Location: ' . $res['payment_url']);
+        exit();
+    } else {
+        echo $res['message'];
+    }
 }
